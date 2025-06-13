@@ -1,0 +1,46 @@
+name: API Tests
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      api:
+        image: python:3.10
+        ports:
+          - 8000:8000
+        options: --health-cmd="curl --fail http://localhost:8000/health || exit 1" --health-interval=5s --health-timeout=3s --health-retries=20
+        env:
+          SECRET_KEY: testkey
+          ALGORITHM: HS256
+        volumes:
+          - ./:/app
+        command: >
+          bash -c "cd /app/bookstore && pip install -r requirements.txt && uvicorn main:app --host 0.0.0.0 --port 8000"
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+      - name: Install dependencies
+        run: npm ci
+        working-directory: ./api-tests
+      - name: Wait for API
+        run: |
+          for i in {1..40}; do
+            curl -f http://localhost:8000/health && break || sleep 3
+          done
+      - name: Run API tests
+        run: npm test
+        working-directory: ./api-tests
+        continue-on-error: false
+      - name: Generate Allure report
+        run: npm run allure:report
+        working-directory: ./api-tests
+      - name: Upload Allure report
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report
+          path: ./api-tests/allure-report
