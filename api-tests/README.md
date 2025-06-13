@@ -1,6 +1,6 @@
 # Bookstore    API Automation Framework
 
-## Overview 
+## Overview    
 This project provides an automated API test framework for the Bookstore FastAPI application. It ensures comprehensive coverage of all major functionalities, including CRUD operations, authentication, and error handling, using Playwright (JavaScript) and Allure reporting.
 
 ---
