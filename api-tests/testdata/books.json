@@ -1,0 +1,43 @@
+[
+  {
+    "name": "Test Book",
+    "author": "Author Name",
+    "published_year": 2024,
+    "book_summary": "A summary",
+    "type": "valid"
+  },
+  {
+    "author": "Author Name",
+    "published_year": 2024,
+    "book_summary": "A summary",
+    "type": "missing_name"
+  },
+  {
+    "name": "Invalid Year",
+    "author": "Author",
+    "published_year": "not-a-year",
+    "book_summary": "Summary",
+    "type": "invalid_year"
+  },
+  {
+    "name": "A",
+    "author": "Author",
+    "published_year": 2024,
+    "book_summary": "B",
+    "type": "edge_case"
+  },
+  {
+    "name": "",
+    "author": "Author",
+    "published_year": 2024,
+    "book_summary": "Summary",
+    "type": "empty_name"
+  },
+  {
+    "name": "Book!@#$%^&*()",
+    "author": "Author<>?/",
+    "published_year": 2024,
+    "book_summary": "Summary with special chars !@#$%^&*()",
+    "type": "special_chars"
+  }
+]

@@ -1,0 +1,32 @@
+[
+  {
+    "email": "apitestuser1@test.com",
+    "password": "TestPass123!",
+    "type": "valid"
+  },
+  {
+    "email": "apitestuser2@test.com",
+    "password": "AnotherPass456$",
+    "type": "valid"
+  },
+  {
+    "email": "invalidemail",
+    "password": "TestPass123!",
+    "type": "invalid_email"
+  },
+  {
+    "email": "apitestuser3@test.com",
+    "password": "short",
+    "type": "invalid_password"
+  },
+  {
+    "email": "apitestuser4@test.com",
+    "password": "",
+    "type": "missing_password"
+  },
+  {
+    "email": "",
+    "password": "TestPass123!",
+    "type": "missing_email"
+  }
+]

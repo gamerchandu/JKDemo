@@ -160,3 +160,10 @@ cython_debug/
 #  and can be added to the global gitignore or merged into this file.  For a more nuclear
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
+
+api-tests/node_modules
+api-tests/allure-results
+api-tests/allure-report
+api-tests/test-results
+
+
