@@ -18,7 +18,7 @@ This project provides an automated API test framework for the Bookstore FastAPI 
 - **Execution & Reporting:**
   - Generates detailed Allure reports highlighting Pass/Fail/Skip results.
 - **CI/CD Integration:**
-  - GitHub Actions pipeline for automated test execution and report upload.
+  - GitHub Actions pipeline for automated test execution and report upload. 
 
 ---
 
