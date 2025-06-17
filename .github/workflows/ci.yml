@@ -1,18 +1,51 @@
-{
-  "name": "api-tests",
-  "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {
-    "test": "playwright test",
-    "allure:report": "npx allure generate ./allure-results --clean -o ./allure-report && npx allure open ./allure-report"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
-  "devDependencies": {
-    "@playwright/test": "^1.53.0",
-    "allure-playwright": "^3.2.2",
-    "dotenv": "^16.5.0"
-  }
-}
+name: API Tests
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r bookstore/requirements.txt
+      - name: Start FastAPI app
+        run: |
+          cd bookstore
+          uvicorn main:app --host 0.0.0.0 --port 8000 &
+          sleep 10
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+      - name: Install dependencies
+        run: npm ci
+        working-directory: ./api-tests
+      - name: Wait for API
+        run: |
+          for i in {1..40}; do
+            curl -f http://localhost:8000/health && break || sleep 3
+          done
+      - name: Run API tests
+        run: BASE_URL=http://localhost:8000 npm test
+        working-directory: ./api-tests
+        continue-on-error: false
+      - name: Install Allure Commandline
+        run: |
+          npm install -g allure-commandline --save-dev
+      - name: Generate Allure report
+        if: always()
+        run: npm run allure:report
+        working-directory: ./api-tests
+      - name: Upload Allure report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report
+          path: ./api-tests/allure-report
