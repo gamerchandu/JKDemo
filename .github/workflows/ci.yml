@@ -37,9 +37,11 @@ jobs:
         working-directory: ./api-tests
         continue-on-error: false
       - name: Generate Allure report
+        if: always()
         run: npm run allure:report
         working-directory: ./api-tests
       - name: Upload Allure report
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: allure-report
