@@ -37,8 +37,8 @@ jobs:
         working-directory: ./api-tests
         continue-on-error: false
       - name: Install Allure Commandline
-        run: |
-          npm install -g allure-commandline --save-dev
+        run: npm install allure-commandline --save-dev
+        working-directory: ./api-tests
       - name: Generate Allure report
         if: always()
         run: npm run allure:report
